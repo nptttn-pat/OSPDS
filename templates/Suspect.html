@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Kanit" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Material Design Bootstrap -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet"> -->
+    <!--<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+    <script src="{{ url_for('static',filename='datatables.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/table.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/scroll.css') }}" />
+        <!--
+    <script src="../static/datatables.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/styles/table.css" />
+    <link rel="stylesheet" type="text/css" href="../static/styles/animate.css" />
+    <link rel="stylesheet" type="text/css" href="../static/styles/scroll.css" />
+            -->
+    <!--
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+-->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .header {
+            /*Photo by Joanna Kosinska on Unsplash*/
+            background-color: #0C2044;
+
+            width: 100%;
+            background-attachment: fixed;
+            /* Center and scale the image nicely */
+            /*
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            */
+        }
+
+        .header>p {
+            box-sizing: border-box;
+            border: 3px solid #f1f1f1;
+            width: 70%;
+            font-size: 64px;
+        }
+
+        .middle {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        select {
+            margin-left: 0.5em;
+            border-radius: 7px;
+            border: 1px solid #cccccc;
+            padding: 1px 7px;
+        }
+
+        select :focus {
+            border-color: rgba(12, 32, 68, 0.8);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.123), 0 0 5px rgba(12, 32, 68, 0.6);
+        }
+        
+        .selector-container{
+            padding-bottom: 5px;
+        }
+    </style>
+
+    <script>
+        var h = ($(window).height()) - 0.5 + 'px '
+        var h_down = ($(window).height() - 70) + 'px '
+        console.log(h_down);
+        $('head').append('<style>.header {height: ' + h + ';}</style>');
+        $('head').append('<style>#section2 {height: ' + h + ';}</style>');
+        $('head').append('<style>#slide_down {top: ' + h_down + ';}</style>');
+    </script>
+    <style>
+        #table_id {
+            border: 2px solid #0C2044;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+
+<body style="font-family: 'Roboto', 'Kanit',sans-serif; background-color: rgb(233,233,233)"
+    class="scrollbar-indigo bordered-indigo thin">
+
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("http://noppanutt.pythonanywhere.com/ShowAll_API", function (data) {
+                $('#table_id').DataTable({
+                    "data": data,
+                    columns: [
+                        //{"data" : "Name"},
+                        { "data": "SusName" },
+                        { "data": "Case" },
+                        { "data": "SusSocial" },
+                        { "data": "Type" }
+                    ],
+                    //searching: false,
+
+                    initComplete: function () {
+                        $(".dataTables_filter").append('<div class = "selector-container"><b>Filter : </b></div>');
+                        var i = 0;
+                        this.api().columns().every(function () {
+                            if (i % 2 == 1) {
+                                var column = this;
+                                var txt;
+                                //console.log(column);
+                                if (i == 1)
+                                    txt = "All Case"
+                                else
+                                    txt = "All Type"
+                                var select = $('<select class = "selector"><option value="">' + txt + '</option></select><style type="text/css">.selector:focus{outline:none;border-color: rgba(12, 32, 68, 0.8);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.123), 0 0 5px rgba(12, 32, 68, 0.6);}</style>')
+                                    .appendTo($(".selector-container"))
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
+
+                                        column
+                                            .search(val ? '^' + val + '$' : '', true, false)
+                                            .draw();
+                                    });
+
+                                column.data().unique().sort().each(function (d, j) {
+
+                                    select.append('<option value="' + d + '">' + d + '</option>');
+                                });
+                            }
+                            i++;
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+    <div class="header text-center">
+        <p class="middle" style="transform: translate(-50%,-60%); color: white ;padding: 5vw">
+            <b>SUSPECT</b><br><span style="font-size: 20px;">รายชื่อผู้ต้องสงสัยที่ได้รับแจ้ง</span></p>
+        <div id="slide_down">
+            <a href="#section2" style="color: white; text-decoration: none">
+                <i id="s1" class="fas fa-chevron-down anime"></i>
+                <p style="margin-bottom: 0px;margin-top: -13px;"></p>
+                <i id="s2" class="fas fa-chevron-down anime"></i>
+            </a>
+        </div>
+    </div>
+    <div id="section2" style="padding:20px 10% ">
+        <h3>รายชื่อผู้ต้องสงสัย</h3>
+        <table id="table_id" class="display">
+            <thead style="background-color: #0C2044; color: white">
+                <tr>
+                    <!--<th>Name</th>-->
+                    <th>SusName</th>
+                    <th>Case</th>
+                    <th>SusSocial</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+           
+
+        </table>
+
+
+
+
+
+        <div style="margin: 20px 0px 0px -10px;">
+            <a href="/" style="color: white; text-decoration: none">
+
+                <i id="s2" class="fas fa-chevron-left anime" style="color: rgb(51, 51, 51);font-size: 10px"></i>
+                <i id="s1" class="fas fa-chevron-left anime" style="color: rgb(51, 51, 51);font-size: 10px"></i>
+                <label
+                    style="color: rgb(51, 51, 51); font-size: 15px ;padding-left: 5px ;cursor:pointer;">กลับหน้าหลัก</label>
+            </a>
+        </div>
+
+
+
+
+    </div>
+
+</body>
+
+</html>

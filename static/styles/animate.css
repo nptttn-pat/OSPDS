@@ -1,0 +1,40 @@
+#slide_down {
+    position: absolute;
+    left: 50%;
+    font-size: 20px;
+    color: white;
+}
+
+#slide_left {
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    font-size: 20px;
+    /*color: white;*/
+}
+
+.anime {
+    animation-name: shade;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+}
+
+#s2 {
+    animation-delay: 0.2s;
+
+}
+
+@keyframes shade {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

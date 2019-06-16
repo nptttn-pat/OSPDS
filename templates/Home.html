@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ยินดีต้อนรับสู่เว็ปไซต์ของเรา</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/hover.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/scroll.css') }}" />
+
+    <link rel="stylesheet" type="text/css" href="hover.css" />
+    <link rel="stylesheet" type="text/css" href="animate.css" />
+
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .grid-container {
+            display: grid;
+
+            grid-template-columns: 16.65% 16.65% 16.65% 16.65% 16.65% auto;
+            grid-gap: 1px;
+            background-color: rgb(233, 233, 233);
+            padding: 0px;
+        }
+
+        .grid-container>a {
+
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        .header {
+            grid-area: 1 / 1 / 5 / 7;
+            /*Photo by Joanna Kosinska on Unsplash*/
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{{ url_for('static',filename='bg.jpg') }}");
+
+            width: 100%;
+            background-attachment: fixed;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .header>p {
+            box-sizing: border-box;
+            border: 3px solid #f1f1f1;
+            width: 70%;
+            font-size: 50px;
+        }
+
+        .middle {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .report {
+            grid-area: 5 / 1 / 6 / 7;
+            background-color: #CD003B;
+        }
+
+        .suspect {
+            grid-area: 7 / 1 / 8 / 7;
+            background-color: #0C2044;
+        }
+        
+        .detect {
+            grid-area: 6 / 1 / 7 / 7;
+            background-color: rgb(214, 138, 38);
+        }
+        
+        .graph {
+            grid-area: 8 / 1 / 9 / 7;
+            background-color: #333333;
+        }
+
+        .eng_text {
+            font-size: 34px;
+        }
+
+        .th_text {
+            font-size: 28px;
+        }
+
+        .link_img {
+            font-size: 40px;
+        }
+
+
+
+        @media only screen and (min-width: 1000px) {
+
+            .header>p {
+                font-size: 64px;
+            }
+
+            .report {
+                grid-area: 5 / 1 / 7 / 5;
+
+            }
+
+            .suspect {
+                grid-area: 5 / 5 / 9 / 7;
+
+            }
+            
+            .graph {
+                grid-area: 7 / 1 / 9 / 3;
+
+            }
+            
+            .detect {
+                grid-area: 7 / 3 / 9 / 5;
+
+            }
+            
+            .eng_text {
+                font-size: 55px;
+            }
+
+            .th_text {
+                font-size: 47px;
+            }
+
+            .link_img {
+                font-size: 50px;
+            }
+        }
+    </style>
+    <script>
+        var h = ($(window).height() / 4) - 0.5 + 'px '
+        var h_down = ($(window).height() - 70) + 'px '
+        console.log(h_down);
+        $('head').append('<style>.grid-container {grid-template-rows: ' + h + h + h + h + h + h + h + h + ';}</style>');
+        $('head').append('<style>#slide_down {top: ' + h_down + ';}</style>');
+
+    </script>
+    <script>
+        var i = 0,j =0;
+        var txt = 'Online Scamming & Phishing' ;
+        var txt1 = 'Detection System';
+        var speed = 60;
+
+        function typeWriter() {
+            if (i < txt.length) {
+                document.getElementById("writing").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+            else if (j < txt1.length) {
+                document.getElementById("writing1").innerHTML += txt1.charAt(j);
+                j++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+    </script>
+</head>
+
+<body style="font-family: 'Roboto', 'Kanit',sans-serif;" class ="scrollbar-indigo bordered-indigo thin" onload="typeWriter()" >
+
+    <div class="grid-container" id="box" style="overflow-x: hidden;">
+
+        <div class="header text-center">
+            <p class="middle" style="transform: translate(-50%,-60%); color: white ;padding: 5vw">
+                <b id="writing"></b><br><b id="writing1"></b><br></p>
+            <div id="slide_down">
+                <a href="#section2" style="color: white; text-decoration: none">
+                    <i id="s1" class="fas fa-chevron-down anime"></i>
+                    <p style="margin-bottom: 0px;margin-top: -13px;"></p>
+                    <i id="s2" class="fas fa-chevron-down anime"></i>
+                </a>
+            </div>
+        </div>
+
+        <a id="section2" class="report" href="/InsertData" style="padding-top:0px;padding-bottom:0px;">
+            <div class="middle hov">
+                <span class="eng_text" style="color: white;">
+                    <b>REPORT</b>
+                    <i class="fas fa-exclamation-circle link_img"></i>
+                </span>
+                <span class='hov_arrow'>
+                    <span style="font-size: 15px">กรอกแบบฟอร์ม </span>
+                    <i class="fas fa-angle-double-right"></i>
+                </span>
+                <p class="th_text" style="color: white "><b>แจ้งเหตุ</b></p>
+            </div>
+        </a>
+
+        <a class="suspect" href="/SuspectShow" style="padding-top:0px;padding-bottom:0px;">
+            <div class="middle hov">
+                <span class="eng_text" style="color: white ">
+                    <b>SUSPECT</b>
+                    <i class="fas fa-address-book link_img"></i>
+                </span>
+                <span class='hov_arrow'>
+                    <span style="font-size: 15px">รายชื่อผู้ต้องสงสัย</span>
+                    <i class="fas fa-angle-double-right"></i>
+                </span>
+                <p class="th_text" style="color: white "><b>ผู้ต้องสงสัย</b></p>
+            </div>
+        </a>
+        
+        <a class="graph" href="/ShowGraph" style="padding-top:0px;padding-bottom:0px;">
+            <div class="middle hov">
+                <span class="eng_text" style="color: white ">
+                    <b>STAT</b>
+                    <i class="fas fa-chart-pie link_img"></i>
+                </span>
+                <span class='hov_arrow' style="top:25%">
+                        <span style="font-size: 12px">สถิติ<br>จำนวนของ<br>การแจ้งเหตุ </span>
+                        <i class="fas fa-angle-double-right"></i>
+                    </span>
+                <p class="th_text" style="color: white "><b>กราฟสถิติ</b></p>
+            </div>
+        </a>
+        
+        <a class="detect" href="/urlcheck" style="padding-top:0px;padding-bottom:0px;">
+            <div class="middle hov">
+                <span class="eng_text" style="color: white ">
+                    <b>Phishing</b>
+                    <i class="fas fa-search link_img"></i>
+                </span>
+                <span class='hov_arrow' style="top:25%">
+                        <span style="font-size: 12px">ตรวจสอบ<br>เว็บไซต์หลอกลวง </span>
+                        <i class="fas fa-angle-double-right"></i>
+                    </span>
+                <p class="th_text" style="color: white "><b>เว็บไซต์หลอกลวง</b></p>
+            </div>
+        </a>
+    </div>
+</body>
+
+</html>

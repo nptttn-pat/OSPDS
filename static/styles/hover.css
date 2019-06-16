@@ -1,0 +1,25 @@
+.hov {
+    transition: 0.5s;
+}
+
+.hov_arrow {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    right: -2%;
+    font-size: 20px;
+    color: white;
+    transition: 0.5s;
+    
+}
+
+.hov:hover {
+    padding-right: 25%;
+    transition: 0.5s;
+}
+
+.hov:hover> .hov_arrow {
+    opacity: 1;
+    transition: 0.5s;
+    padding-right: 10%;
+}

@@ -1,0 +1,61 @@
+
+.label_radio {
+  font-weight: normal;
+  font-size: 14px;
+  Color: #666666;
+  display: block;
+  cursor: pointer;
+}
+[type="radio"] {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+[type="radio"] + span:before {
+  content: '';
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.10em;
+  border-radius: 1em;
+  border: 0.35em solid #fff;
+  box-shadow: 0 0 0 0.10em #CD003B;
+  margin-right: 0.75em;
+  transition: 0.5s ease all;
+}
+[type="radio"]:checked + span:before {
+  background: #CD003B;
+  box-shadow: 0 0 0 0.10em #CD003B;
+}
+[type="radio"]:focus + span::after {
+  font-size: 1.2em;
+  line-height: 1;
+  vertical-align: -0.125em;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.btn-upload {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}

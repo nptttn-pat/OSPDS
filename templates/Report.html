@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>แจ้งเหตุ</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Kanit" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet">
+    <!-- MDB core JavaScript -->
+    <script src="css3-animate-it.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/hover.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/scroll.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/animations.css') }}" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 16.65% 16.65% 16.65% 16.65% 16.65% auto;
+            grid-gap: 1px;
+            background-color: rgb(233, 233, 233);
+            padding: 0px;
+        }
+        .grid-container>a {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+            text-decoration: none;
+        }
+        .header {
+            grid-area: 1 / 1 / 5 / 7;
+            /*Photo by Joanna Kosinska on Unsplash*/
+            background-color: #CD003B;
+            width: 100%;
+            background-attachment: fixed;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .header>p {
+            box-sizing: border-box;
+            border: 3px solid #f1f1f1;
+            width: 70%;
+            font-size: 50px;
+        }
+        .middle {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .form-control:focus {
+            border-color: rgba(205, 0, 59, 0.8);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.13), 0 0 5px rgba(205, 0, 59, 0.6);
+        }
+        @media only screen and (min-width: 1000px) {
+            .header>p {
+                font-size: 64px;
+            }
+        }
+        .form {
+            grid-area: 5 / 2 / 9 / 6;
+        }
+        .row {
+            display: -ms-flexbox;
+            /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap;
+            /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 0px;
+        }
+        .col-25 {
+            -ms-flex: 25%;
+            /* IE10 */
+            flex: 25%;
+        }
+        .col-50 {
+            -ms-flex: 50%;
+            /* IE10 */
+            flex: 50%;
+        }
+        .col-75 {
+            -ms-flex: 75%;
+            /* IE10 */
+            flex: 75%;
+        }
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+        .container {
+            padding: 30px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column;
+            }
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+    <script>
+        var h = ($(window).height() / 4) - 0.5 + 'px '
+        var h_down = ($(window).height() - 70) + 'px '
+        console.log(h_down);
+        $('head').append('<style>.grid-container {grid-template-rows: ' + h + h + h + h + h + h + h + h + h + h + h + h + ';}</style>');
+        $('head').append('<style>#slide_down {top: ' + h_down + ';}</style>');
+    </script>
+    <!-- <script>
+        var i = 0;
+        var txt = 'WELCOME TO OUR PROJECT.';
+        var speed = 60;
+        function typeWriter() {
+            if (i < txt.length) {
+                document.getElementById("writing").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+    </script> -->
+    <script>
+        function Show(social) {
+            if (social == 'Facebook') {
+                var notface = $("#choose_parent input[id!=facebook]");
+                var face = $("#choose_parent input[id=facebook]");
+                notface.animate({ width: '0%' }).hide().val('').prop('required',false);
+                face.show().animate({ width: '75%' }).prop('required',true);
+            }
+            else if (social == 'E-mail') {
+                var notmail = $("#choose_parent input[id!=e-mail]");
+                var mail = $("#choose_parent input[id=e-mail]");
+                notmail.animate({ width: '0%' }).hide().val('').prop('required',false);
+                mail.show().animate({ width: '75%' }).prop('required',true);
+            }
+            else if (social == 'Line') {
+                var notline = $("#choose_parent input[id!=line]");
+                var line = $("#choose_parent input[id=line]");
+                notline.animate({ width: '0%' }).hide().val('').prop('required',false);
+                line.show().animate({ width: '75%' }).prop('required',true);
+            }
+            else if (social == 'Website') {
+                var notweb = $("#choose_parent input[id!=web]");
+                var web = $("#choose_parent input[id=web]");
+                notweb.animate({ width: '0%' }).hide().val('').prop('required',false);
+                web.show().animate({ width: '75%' }).prop('required',true);
+            }
+        }
+    </script>
+
+</head>
+
+<body style="font-family: 'Roboto', 'Kanit',sans-serif;" class="scrollbar scrollbar-pink bordered-pink thin">
+
+    <div class="grid-container" id="box" style="overflow-x: hidden;">
+
+        <div class="header text-center">
+            <p class="middle" style="transform: translate(-50%,-60%); color: white ;padding: 5vw">
+                <b>REPORT FORM</b><br><span style="font-size: 20px;">โปรดกรอกข้อมูลให้ครบถ้วน</span></p>
+            <div id="slide_down">
+                <a href="#section2" style="color: white; text-decoration: none">
+                    <i id="s1" class="fas fa-chevron-down anime"></i>
+                    <p style="margin-bottom: 0px;margin-top: -13px;"></p>
+                    <i id="s2" class="fas fa-chevron-down anime"></i>
+                </a>
+            </div>
+        </div>
+
+        <div id="section2" class="form">
+            <div class="row">
+                <div class="container">
+                    <form action="/insert" method="post" enctype="multipart/form-data">
+
+                        <h3 style="margin: 10px 0 20px 0">ข้อมูลของคุณ</h3>
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="userfname"><i class="fa fa-user" style="margin: 0 5px 0 5px"></i> ชื่อ</label>
+                                <input type="text" id="fname" class="form-control" name="userfname" placeholder="Name"
+                                    required>
+                            </div>
+                            <div class="col-50">
+                                <label for="userlname"> นามสกุล</label>
+                                <input type="text" id="adr" name="userlname" class="form-control" placeholder="Lastname"
+                                required>
+                            </div>
+
+
+                            <div class="col-25">
+                                <label for="Gender"><i class="fa fa-mars" style="margin: 0 5px 0 0px"></i>เพศ</label>
+                                <select id="sex" class="form-control" name="Gender"
+                                    style="width: 100%; margin-top: 10px">
+                                    <option value="M">ชาย</option>
+                                    <option value="F">หญิง</option>
+                                    <option value="A">เพศทางเลือก</option>
+                                </select>
+                            </div>
+                            <div class="col-25">
+                                <label for="userage"><i class="fa fa-child" style="margin: 0 5px 0 5px"></i>
+                                    อายุ</label>
+                                <input type="number" id="age" name="userage" class="form-control" placeholder="" required>
+                            </div>
+
+
+                            <div class="col-50">
+                                <label for="usertel"><i class="fas fa-phone-square" style="margin: 0 5px 0 5px"></i>
+                                    เบอร์โทร</label>
+                                <input type="tel" id="tel" name="usertel" class="form-control"
+                                    placeholder="Tel. Number" required>
+                            </div>
+                            <div class="col-50">
+                                <label for="useremail"><i class="fa fa-envelope" style="margin: 0 5px 0 5px"></i>
+                                    E-mail</label>
+                                <input type="email" id="email" name="useremail" class="form-control"
+                                    placeholder="name@example.com" required>
+                            </div>
+                        </div>
+                        <h3 style="margin: 10px 0 20px 0">ข้อมูลของผู้ต้องสงสัย</h3>
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="Susfname"><i class="fas fa-user-ninja"
+                                        style="margin: 0 5px 0 5px"></i>ชื่อ</label>
+                                <input type="text" id="cname" name="Susfname" class="form-control"
+                                    placeholder="ถ้าไม่ทราบใส่ -" required>
+                            </div>
+                            <div class="col-50">
+                                <label for="Suslname">นามสกุล</label>
+                                <input type="text" id="ccnum" name="Suslname" class="form-control"
+                                    placeholder="ถ้าไม่ทราบใส่ -" required>
+                            </div>
+                            <div id="choose_parent" class="col-50">
+                                <label for="Type">แอพพลิเคชัน</label>
+                                <div class="form-inline">
+                                    <select id="choose" class="form-control" name="Type"
+                                        style="width: 25%; margin-right: 0px; margin-bottom: 20px;"
+                                        onchange="Show(value)">
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="E-mail">E-mail</option>
+                                        <option value="Line">Line</option>
+                                        <option value="Website">Website</option>
+                                    </select>
+                                    <input id="facebook" type="text" class="form-control typeid" name="Susfacebook"
+                                        placeholder="ชื่อ facebook" style="width:75% ; margin-left : 0px ;" required>
+                                    <input id="e-mail" type="text" class="form-control typeid" name="Susemail"
+                                        placeholder="e-mail ของผู้ต้องสงสัย" style="display: none; margin-left : 0px ;"
+                                        >
+                                    <input id="line" type="text" class="form-control typeid" name="Susline"
+                                        placeholder="ID line หรือชื่อ line " style="display: none; margin-left : 0px ;"
+                                        >
+                                    <input id="web" type="text" class="form-control typeid" name="Susurl"
+                                        placeholder="url ของ web ต้องสงสัย" style="display: none; margin-left : 0px ;"
+                                        >
+                                </div>
+                            </div>
+
+                        </div>
+                        <h5 style="margin: 10px 0 20px 0">ประเภทของคดี</h5>
+                        <div class="form-group">
+                            <div>
+                                <label class="label_radio" for="Hacking to modify / steal / destroy Data">
+                                    <input type="radio" name="Case" value="Hacking_to_modify_or_steal_or_destroy_Data"
+                                        id="Hacking to modify / steal / destroy Data">
+                                    <span>Hacking to modify / steal / destroy Data</span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="label_radio" for="Selling products / Services scam">
+                                    <input type="radio" name="Case" value="Selling_products_or_Services_scam"
+                                        id="Selling products / Services scam">
+                                    <span>Selling products / Services scam</span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="label_radio" for="Fake to others">
+                                    <input type="radio" name="Case" value="Fake_to_others" id="Fake to others">
+                                    <span>Fake to others</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="label_radio" for="Scam to transfer money">
+                                    <input type="radio" name="Case" value="Scam_to_transfer_money"
+                                        id="Scam to transfer money">
+                                    <span>Scam to transfer money</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="label_radio" for="Email scam">
+                                    <input type="radio" name="Case" value="Email_scam" id="Email scam">
+                                    <span>Email scam</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="label_radio" for="Romance scam">
+                                    <input type="radio" name="Case" value="Romance_scam" id="Romance scam">
+                                    <span>Romance scam</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="label_radio" for="Blackmail">
+                                    <input type="radio" name="Case" value="Blackmail" id="Blackmail">
+                                    <span>Blackmail</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="label_radio" for="Defamation">
+                                    <input type="radio" name="Case" value="Defamation" id="Defamation">
+                                    <span>Defamation</span>
+                                </label>
+                            </div>
+                        </div>
+                        <h5 style="margin: 10px 0 20px 0">รูปหลักฐาน</h5>
+                        <input id="file" type="file" name="image" accept="image/*" multiple required/>
+                        <h5 style="margin: 10px 0 20px 0">ข้อเสนอแนะ</h5>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" maxlength="250" name="Other"></textarea>
+                        </div>
+
+                        <a class="btn btn-primary" href="/">กลับหน้าแรก</a>
+                        <button type="submit" class="btn btn-success">บันทึก</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ShowAll</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body style="font-family: 'Roboto', 'Kanit',sans-serif; background-color: rgb(194, 211, 248)">
+    <div class="container">
+        <h1 align="center">ALL DATA | ADMIN ONLY</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ลำดับที่</th>
+                    <th>วันที่แจ้ง</th>
+                    <th>ชื่อผู้แจ้ง</th>
+                    <th>เพศ</th>
+                    <th>อายุ</th>
+                    <th>เบอร์โทรศัพท์</th>
+                    <th>E-mail</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in count %}
+                <tr>
+                    <td>{{i+1}}</td>
+                    <td>{{date[i]}}</td>
+                    <td>{{name[i]}}</td>
+                    <td>{{gender[i]}}</td>
+                    <td>{{age[i]}}</td>
+                    <td>{{tel[i]}}</td>
+                    <td>{{email[i]}}</td>
+                    <!-- <td>{{key[i]}}</td> -->
+                    <!-- <td>{{susname[i]}}</td> -->
+                    <!-- <td>{{socialtype[i]}}</td> -->
+                    <!-- <td>{{sussocial[i]}}</td> -->
+                    <!-- <td>{{other[i]}}</td> -->
+                    <!-- <td>{{image[i]}}</td> -->
+                    <!-- <td>{{case[i]}}</td> -->
+                    <td>
+                        <a href="" class="btn btn-success btn-xs" data-toggle="modal"
+                            data-target="#modalinfo{{ key[i] }}">Info</a>
+                        <!-- <a href="" class="btn btn-warning btn-xs" data-toggle="modal"
+                            data-target="#modaledit{{ key[i] }}">Edit</a> -->
+                        <a href="/delete/{{ key[i] }}" class="btn btn-danger btn-xs"
+                            onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?')">Delete</a>
+                    </td>
+                </tr>
+                <!-- <div id="modaledit{{key[i]}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">อัพเดทข้อมูลของท่าน</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/update" method="POST">
+                                    <div class="form-group">
+                                        <label>ชื่อผู้แจ้ง:</label>
+                                        <input type="hidden" name="id" value="{{key[i]}}">
+                                        <input type="text" class="form-control" name="userfname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>นามสกุลผู้แจ้ง:</label>
+                                        <input type="text" class="form-control" name="userlname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="useremail">E-mail ของผู้แจ้ง</label>
+                                        <input type="text" class="form-control" name="useremail" value="{{email[i]}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userage">อายุของผู้แจ้ง</label>
+                                        <input type="text" class="form-control" name="userage" value="{{age[i]}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usertel">เบอร์โทรศัพท์ของผู้แจ้ง</label>
+                                        <input type="text" class="form-control" name="usertel" value="{{tel[i]}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Type">ประเภทของแอพลิเคชัน</label>
+                                        <select class="form-control" name="Type">
+                                            <option value="Facebook">Facebook</option>
+                                            <option value="E-mail">E-mail</option>
+                                            <option value="Line">Line</option>
+                                            <option value="Website">Website</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Sussocial">ผู้ต้องสงสัย (ตัวอย่างเช่น ชื่อ Facebook, E-mail,
+                                            LineID(หรือชื่อ Line), Link ของ
+                                            Website)</label>
+                                        <input type="text" class="form-control" name="Sussocial"
+                                            value="{{sussocial[i]}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Susfname">ชื่อของผู้ต้องสงสัย (ถ้าไม่ทราบใส่ "-" ) </label>
+                                        <input type="text" class="form-control" name="Susfname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Suslname">นามสกุลของผู้ต้องสงสัย (ถ้าไม่ทราบใส่ "-" ) </label>
+                                        <input type="text" class="form-control" name="Suslname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Case">ประเภทของคดี</label>
+                                        <br>
+                                        <input type="radio" name="Case"
+                                            value="Hacking_to_modify_or_steal_or_destroy_Data"> Hacking to modify / steal / destroy Data
+                                        <br>
+                                        <input type="radio" name="Case" value="Selling_products_or_Services_scam">Selling products / Services scam
+                                        <br>
+                                        <input type="radio" name="Case" value="Fake_to_others"> Fake to others
+                                        <br>
+                                        <input type="radio" name="Case" value="Scam_to_transfer_money"> Scam to transfer money
+                                        <br>
+                                        <input type="radio" name="Case" value="Email_scam"> Email scam
+                                        <br>
+                                        <input type="radio" name="Case" value="Romance_scam"> Romance scam
+                                        <br>
+                                        <input type="radio" name="Case" value="Blackmail"> Blackmail
+                                        <br>
+                                        <input type="radio" name="Case" value="Defamation"> Defamation
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Other">ข้อมูลเพื่มเติม (ไม่มี ใส่ "-")</label>
+                                        <textarea rows="10" cols="30" input type="text" maxlength="300" class="form-control" name="Other" value="{{other[i]}}"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">อัพเดท</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div id="modalinfo{{key[i]}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">ข้อมูลของผู้ต้องสงสัย</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>ชื่อผู้ต้องสงสัย: {{susname[i]}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>ประเภทของแอพลิเคชั่น: {{socialtype[i]}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>ชื่อในแอพลิเคชั่น: {{sussocial[i]}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>ประเภทของคดี: {{case[i]}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>ข้อมูลเพิ่มเติม: {{other[i]}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>หลักฐานเพิ่มเติม:</label>
+                                    <br>
+                                    <a href={{image[i]}}><img src={{image[i]}} alt="Image{{i+1}}" style="width:128px;height:128px;"></a>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/InsertData" class="pull-right btn btn-primary">เพิ่มรายชื่อใหม่</a>
+        <a href="/" class="btn btn-defult">ย้อนกลับ</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>STATISTICS</title>
+    <!-- including ECharts file -->
+    <script src="{{ url_for('static',filename='echarts.js') }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Kanit" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/animate.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/scroll.css') }}" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .header {
+            /*Photo by Joanna Kosinska on Unsplash*/
+            background-color: #333333;
+
+            width: 100%;
+            background-attachment: fixed;
+            /* Center and scale the image nicely */
+            /*
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            */
+        }
+
+        .header>p {
+            box-sizing: border-box;
+            border: 3px solid #f1f1f1;
+            width: 70%;
+            font-size: 64px;
+        }
+
+        .middle {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .row {
+            width: 100%;
+            margin: 0px;
+        }
+
+        .graph-container {
+            padding: 20px 20px 10px 20px;
+        }
+    </style>
+    <script>
+        var h = ($(window).height()) - 0.5 + 'px '
+        var h_down = ($(window).height() - 70) + 'px '
+        console.log(h_down);
+        $('head').append('<style>.header {height: ' + h + ';}</style>');
+        //$('head').append('<style>#section2 {height: ' + h + ';}</style>');
+        //$('head').append('<style>.row {height: ' + h/2 + ';}</style>');
+        $('head').append('<style>#slide_down {top: ' + h_down + ';}</style>');
+    </script>
+</head>
+
+<body style="font-family: 'Roboto', 'Kanit',sans-serif;" class="scrollbar-black bordered-black thin">
+    <!-- prepare a DOM container with width and height -->
+
+
+    <div class="header text-center">
+        <p class="middle" style="transform: translate(-50%,-60%); color: white ;padding: 5vw">
+            <b>STATISTICS</b><br><span style="font-size: 20px;">กราฟแสดงสถิติ</span></p>
+        <div id="slide_down">
+            <a href="#section2" style="color: white; text-decoration: none">
+                <i id="s1" class="fas fa-chevron-down anime"></i>
+                <p style="margin-bottom: 0px;margin-top: -13px;"></p>
+                <i id="s2" class="fas fa-chevron-down anime"></i>
+            </a>
+        </div>
+    </div>
+    <div id="section2" style="margin: 0px ;margin-top : 1px;padding: 20px;background-color: #333333">
+        <div class="row">
+            <div id="groupcase" class="graph-container" style="width: 50%;height:500px;"></div>
+            <div id="grouptype" class="graph-container" style="width: 50%;height:500px;"></div>
+            <div id="groupage" class="graph-container" style="width: 100%;height:500px;"></div>
+        </div>
+        
+        <div style="margin: 0px 0px 0px 10px; background-color: #333333">
+            <a href="/" style="color: white; text-decoration: none">
+                <i id="s2" class="fas fa-chevron-left anime" style="color: white;font-size: 10px"></i>
+                <i id="s1" class="fas fa-chevron-left anime" style="color:white;font-size: 10px"></i>
+                <label style="color:white; font-size: 15px ;padding-left: 5px ;cursor:pointer;">กลับหน้าหลัก</label>
+            </a>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        // based on prepared DOM, initialize echarts instance
+        var c = { romance: 0, hacking: 0, selling: 0, fake: 0, email: 0, scam: 0, defam: 0, black: 0 }
+        var t_face = 0, t_line = 0, t_email = 0, t_web = 0;
+        var t = { face: 0, line: 0, email: 0, web: 0 }
+        var gend = {"lowerthan20":{Male: 0, Female: 0, Alternative: 0 }, "21to30": { Male: 0, Female: 0, Alternative: 0 }, "31to40": { Male: 0, Female: 0, Alternative: 0 }, "41to50": { Male: 0, Female: 0, Alternative: 0 }, "51to60": { Male: 0, Female: 0, Alternative: 0 }, "61to70": { Male: 0, Female: 0, Alternative: 0 }, "over70": { Male: 0, Female: 0, Alternative: 0 } }
+        //////////////////////////////////////////////////////////////////////
+        var data;
+        $.getJSON("http://noppanutt.pythonanywhere.com/ShowAll_API", function (json) {
+            data = json;
+            dataReady();
+            work();
+        });
+        /////////////////////////////////////////////////////////////////////
+        function dataReady() {
+            var len = data.length;
+            //console.log(data);
+            for (i = 0; i < len; i++) {
+                if (data[i]["Case"] == "Romance_scam") {
+                    c["romance"]++;
+                }
+                else if (data[i]["Case"] == "Email_scam") {
+                    c["email"]++;
+                }
+                else if (data[i]["Case"] == "Fake_to_others") {
+                    c["fake"]++;
+                }
+                else if (data[i]["Case"] == "Selling_products_or_Services_scam") {
+                    c["selling"]++;
+                }
+                else if (data[i]["Case"] == "Scam_to_transfer_money") {
+                    c["scam"]++;
+                }
+                else if (data[i]["Case"] == "Defamation") {
+                    c["defam"]++;
+                }
+                else if (data[i]["Case"] == "Hacking_to_modify_or_steal_or_destroy_Data") {
+                    c["hacking"]++;
+                }
+                else if (data[i]["Case"] == "Blackmail") {
+                    c["black"]++;
+                }
+                if (data[i]["Type"] == "Facebook") {
+                    t["face"]++;
+                }
+                else if (data[i]["Type"] == "E-mail") {
+                    t["email"]++;
+                }
+                else if (data[i]["Type"] == "Line") {
+                    t["line"]++;
+                }
+                else if (data[i]["Type"] == "Website") {
+                    t["web"]++;
+                }
+
+                if(data[i]["Age"] <= 20){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["lowerthan20"]["Alternative"]++;
+                    }
+                    else{
+                        gend["lowerthan20"][data[i]["Gender"]]++;
+                    }
+                }
+                else if(data[i]["Age"] > 20 && data[i]["Age"] <= 30){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["21to30"]["Alternative"]++;
+                    }
+                    else{
+                        gend["21to30"][data[i]["Gender"]]++;
+                    }
+                }
+                else if(data[i]["Age"] > 30 && data[i]["Age"] <= 40){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["31to40"]["Alternative"]++;
+                    }
+                    else{
+                        gend["31to40"][data[i]["Gender"]]++;
+                    }
+                }
+                else if(data[i]["Age"] > 40 && data[i]["Age"] <= 50){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["41to50"]["Alternative"]++;
+                    }
+                    else{
+                        gend["41to50"][data[i]["Gender"]]++;
+                    }
+                }
+                
+                else if(data[i]["Age"] > 50 && data[i]["Age"] <= 60){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["51to60"]["Alternative"]++;
+                    }
+                    else{
+                        gend["51to60"][data[i]["Gender"]]++;
+                    }
+                }
+
+                else if(data[i]["Age"] > 60 && data[i]["Age"] <= 70){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["61to70"]["Alternative"]++;
+                    }
+                    else{
+                        gend["61to70"][data[i]["Gender"]]++;
+                    }
+                }
+                else if(data[i]["Age"] > 70){
+                    if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                        gend["over70"]["Alternative"]++;
+                    }
+                    else{
+                        gend["over70"][data[i]["Gender"]]++;
+                    }
+                }
+                
+
+                // if (data[i]["Gender"] != "Male" && data[i]["Gender"] != "Female") {
+                //     gend[data[i]["Age"]]["Alternative"]++;
+                // }
+                // else {
+                //     gend[data[i]["Age"]][data[i]["Gender"]]++;
+                // }
+
+
+            }
+
+        }
+        function work() {
+            var GroupCase = echarts.init(document.getElementById('groupcase'), 'dark');
+            option = {
+                title: {
+                    text: 'Group by Case',
+                    subtext: 'สถิติแยกตามประเภทคดี',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} : {c} ({d}%)"
+                },
+
+                legend: {
+                    //x: 'center',
+                    //y: 'bottom',
+                    //show : false,
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['Romance Scam', 'Email scam', 'Fake to others', 'Service scam', 'Scam to tranfer money', 'Hacking', 'Defamation', 'Blackmail']
+                },
+                toolbox: {
+                    show: false,
+                    /*
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel']
+                        },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                    */
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: 'จำนวน',
+                        type: 'pie',
+                        radius: [40, 140],
+                        center: ['50%', '55%'],
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        lableLine: {
+                            normal: {
+                                show: false
+                            },
+
+                            emphasis: {
+                                show: true
+                            }
+
+                        },
+                        data: [
+                            { value: c["romance"], name: 'Romance Scam' },
+                            { value: c["email"], name: 'Email scam' },
+                            { value: c["fake"], name: 'Fake to others' },
+                            { value: c["selling"], name: 'Service scam' },
+                            { value: c["scam"], name: 'Scam to tranfer money' },
+                            { value: c["hacking"], name: 'Hacking' },
+                            { value: c["defam"], name: 'Defamation' },
+                            { value: c["black"], name: 'Blackmail' }
+                        ]
+                    },
+                ]
+            };
+            GroupCase.setOption(option);
+            var maxVal = (t["email"] + t["face"] + t["line"] + t["web"]) / 2.5
+            var GroupType = echarts.init(document.getElementById('grouptype'), 'dark');
+            option = {
+                title: {
+                    text: 'Group by Type',
+                    subtext: 'สถิติแยกตามประเภทโซเชียล',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                /*
+                legend: {
+                    x: 'center',
+                    y: 'bottom',
+                    data: ['Email', 'Facebook', '', '降水量', '蒸发量']
+                },
+                */
+                radar: [
+                    {
+                        indicator: [
+                            { text: 'Email', max: maxVal },
+                            { text: 'Facebook', max: maxVal },
+                            { text: 'Line', max: maxVal },
+                            { text: 'Website', max: maxVal }
+                        ],
+                        center: ['50%', '55%'],
+                        radius: 130
+                    },
+                ],
+                series: [
+                    {
+                        type: 'radar',
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: [
+                            {
+                                value: [t["email"], t["face"], t["line"], t["web"]],
+                                name: 'จำนวน'
+                            }
+                        ]
+                    },
+                ]
+            };
+            GroupType.setOption(option);
+            var GroupAge = echarts.init(document.getElementById('groupage'), 'dark');
+            option = {
+                title: {
+                    text: 'Group by Age and Gender',
+                    subtext: 'สถิติแยกตามอายุและเพศ',
+                    x: 'center'
+                },
+                legend: {
+                    x: 'center',
+                    y: 'bottom'
+                },
+                tooltip: {},
+                dataset: {
+                    source: [
+                        ['gender', 'Male', 'Female', 'Alternative'],
+                        ['<= 20',gend["lowerthan20"]["Male"],gend["lowerthan20"]["Female"],gend["lowerthan20"]["Alternative"]],
+                        ['21 - 30',gend["21to30"]["Male"],gend["21to30"]["Female"],gend["21to30"]["Alternative"]],
+                        ['31 - 40',gend["31to40"]["Male"],gend["31to40"]["Female"],gend["31to40"]["Alternative"]],
+                        ['41 - 50',gend["41to50"]["Male"],gend["41to50"]["Female"],gend["41to50"]["Alternative"]],
+                        ['51 - 60',gend["51to60"]["Male"],gend["51to60"]["Female"],gend["51to60"]["Alternative"]],
+                        ['61 - 70',gend["61to70"]["Male"],gend["61to70"]["Female"],gend["61to70"]["Alternative"]],
+                        ['> 70',gend["over70"]["Male"],gend["over70"]["Female"],gend["over70"]["Alternative"]]
+                    ]
+                },
+                xAxis: { type: 'category' },
+                yAxis: {},
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
+                series: [
+                    { type: 'bar' },
+                    { type: 'bar' },
+                    { type: 'bar' }
+                ]
+            };
+            GroupAge.setOption(option);
+        }
+    </script>
+
+</body>
+
+</html>
