@@ -55,208 +55,6 @@ def Searchtype():
     return render_template('searchtype.html')
 
 
-# @app.route("/InformationFromUser", methods=['POST'])
-# def Showuser():
-#     try:
-#         userfname = request.form['userfname']
-#         userlname = request.form['userlname']
-#         username = userfname+'_'+userlname
-#         result = firebase.get('/users', None)
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         i = 0
-#         for Info in result:
-#             if (result[Info] != None):
-#                 if (result[Info]["Name"] == username):
-#                     if "Name" in result[Info]:
-#                         name.append(result[Info]["Name"])
-#                     else:
-#                         name.append("NO Info")
-#                     if "Case" in result[Info]:
-#                         case.append(result[Info]["Case"])
-#                     else:
-#                         case.append("NO Info")
-#                     if "Susname" in result[Info]:
-#                         temp = result[Info]["Susname"].split('_')
-#                         nt = temp[0]+" "+temp[1]
-#                         susname.append(nt)
-#                     else:
-#                         susname.append("NO Info")
-#                     if "Sussocial" in result[Info]:
-#                         sussocial.append(result[Info]["Sussocial"])
-#                     else:
-#                         sussocial.append("NO Info")
-#                     if "Type" in result[Info]:
-#                         socialtype.append(result[Info]["Type"])
-#                     else:
-#                         socialtype.append("NO Info")
-#                     if "Gender" in result[Info]:
-#                         if(result[Info]["Gender"] == "M"):
-#                             gender.append("Male")
-#                         elif (result[Info]["Gender"] == "F"):
-#                             gender.append("Female")
-#                         else:
-#                             gender.append("Alternative")
-#                         # gender.append(result[Info]["Gender"])
-#                     else:
-#                         gender.append("NO Info")
-#                     sp = Info.split("-")
-#                     d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                     date.append(d)
-#                     key.append(Info)
-#                     count.append(i)
-#                     i += 1
-#         return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, show="ข้อมูลของ User", gender=gender)
-
-#     except:
-#         return render_template('no_data.html')
-
-
-# @app.route("/InformationFromUser_API", methods=['GET'])
-# def API_Showuser():
-#     try:
-#         fname = request.args.get('fname')
-#         sname = request.args.get('sname')
-#         userfname = fname.lower()
-#         userlname = sname.lower()
-#         username = userfname+' '+userlname
-#         print(username,file=sys.stderr)
-#         result = firebase.get('/users', None)
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         age = []
-#         i = 0
-#         for Info in result:
-#             if (result[Info] != None):
-#                 if (result[Info]["Name"].lower() == username):
-#                     if "Name" in result[Info]:
-#                         # temp = result[Info]["Name"].split('_')
-#                         # nt = temp[0]+' '+temp[1]
-#                         name.append(result[Info]["Name"])
-#                     else:
-#                         name.append("NO Info")
-#                     if "Case" in result[Info]:
-#                         case.append(result[Info]["Case"])
-#                     else:
-#                         case.append("NO Info")
-#                     if "Susname" in result[Info]:
-#                         susname.append(result[Info]["Susname"])
-#                     else:
-#                         susname.append("NO Info")
-#                     if "Sussocial" in result[Info]:
-#                         sussocial.append(result[Info]["Sussocial"])
-#                     else:
-#                         sussocial.append("NO Info")
-#                     if "Type" in result[Info]:
-#                         socialtype.append(result[Info]["Type"])
-#                     else:
-#                         socialtype.append("NO Info")
-#                     if "Gender" in result[Info]:
-#                         if(result[Info]["Gender"] == "M"):
-#                             gender.append("Male")
-#                         elif (result[Info]["Gender"] == "F"):
-#                             gender.append("Female")
-#                         else:
-#                             gender.append("Alternative")
-#                         # gender.append(result[Info]["Gender"])
-#                     else:
-#                         gender.append("NO Info")
-#                     if "Age" in result[Info]:
-#                         age.append(result[Info]["Age"])
-#                     else:
-#                         age.append("NO Info")
-#                     sp = Info.split("-")
-#                     d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                     date.append(d)
-#                     key.append(Info)
-#                     count.append(i)
-#                     i += 1
-#         resp = make_response(return_json(name, case, susname, sussocial, socialtype, gender, age))
-#         resp.headers['Content-Type'] = 'application/json'
-#         resp.headers['Access-Control-Allow-Origin'] = '*'
-#         return resp
-#     except:
-#         return render_template('no_data.html')
-
-
-# @app.route("/InformationFromSuspect", methods=['POST'])
-# def Showsusname():
-#     try:
-#         susfname = request.form['susfname']
-#         suslname = request.form['suslname']
-#         Susname = susfname+' '+suslname
-#         Susname1 = susfname+'_'+suslname
-#         result = firebase.get('/users', None)
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         i = 0
-#         for Info in result:
-#             if (result[Info] != None):
-#                 if (result[Info]["Susname"].lower() == Susname.lower() or result[Info]["Susname"].lower() == Susname1.lower()):
-#                     if "Name" in result[Info]:
-#                         name.append(result[Info]["Name"])
-#                     else:
-#                         name.append("NO Info")
-#                     if "Case" in result[Info]:
-#                         case.append(result[Info]["Case"])
-#                     else:
-#                         case.append("NO Info")
-#                     if "Susname" in result[Info]:
-#                         susname.append(result[Info]["Susname"])
-#                     else:
-#                         susname.append("NO Info")
-#                     if "Sussocial" in result[Info]:
-#                         sussocial.append(result[Info]["Sussocial"])
-#                     else:
-#                         sussocial.append("NO Info")
-#                     if "Type" in result[Info]:
-#                         socialtype.append(result[Info]["Type"])
-#                     else:
-#                         socialtype.append("NO Info")
-#                     if "Gender" in result[Info]:
-#                         if(result[Info]["Gender"] == "M"):
-#                             gender.append("Male")
-#                         elif (result[Info]["Gender"] == "F"):
-#                             gender.append("Female")
-#                         else:
-#                             gender.append("Alternative")
-#                         # gender.append(result[Info]["Gender"])
-#                     else:
-#                         gender.append("NO Info")
-#                     sp = Info.split("-")
-#                     d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                     date.append(d)
-#                     key.append(Info)
-#                     count.append(i)
-#                     i += 1
-#         susname = set_susname(susname)
-#         return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, gender = gender, show="ข้อมูลของผู้ต้องสงสัย")
-
-#     except:
-#         return render_template('no_data.html')
-
-
 @app.route("/InformationFromSuspect_API", methods=['GET'])
 def API_Showsusname():
     try:
@@ -329,76 +127,6 @@ def API_Showsusname():
     except:
         return render_template('no_data.html')
 
-
-# @app.route("/InformationFromCase", methods=['POST'])
-# def Showcase():
-#     #try:
-#         Case = request.form['Case']
-#         result = firebase.get('/users', None)
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         i = 0
-#         for Info in result:
-#             if (result[Info] != None):
-#                 if (result[Info]["Case"] == Case):
-#                     if "Name" in result[Info]:
-#                         name.append(result[Info]["Name"])
-#                     else:
-#                         name.append("NO Info")
-#                     if "Case" in result[Info]:
-#                         # temp = result[Info]["Case"]
-#                         # temp = temp.split('_')
-#                         # anss = ''
-#                         # for i in range(len(temp)):
-#                         #     anss = anss+temp[i]+" "
-#                         # case.append(anss[0:len(anss)])
-#                         # return str(type(result[Info]["Case"])).split("'")[1]
-#                         case.append(result[Info]["Case"])
-#                     else:
-#                         case.append("NO Info")
-#                     if "Susname" in result[Info]:
-#                         susname.append(result[Info]["Susname"])
-#                     else:
-#                         susname.append("NO Info")
-#                     if "Sussocial" in result[Info]:
-#                         sussocial.append(result[Info]["Sussocial"])
-#                     else:
-#                         sussocial.append("NO Info")
-#                     if "Type" in result[Info]:
-#                         socialtype.append(result[Info]["Type"])
-#                     else:
-#                         socialtype.append("NO Info")
-#                     if "Gender" in result[Info]:
-#                         if(result[Info]["Gender"] == "M"):
-#                             gender.append("Male")
-#                         elif (result[Info]["Gender"] == "F"):
-#                             gender.append("Female")
-#                         else:
-#                             gender.append("Alternative")
-#                         # gender.append(result[Info]["Gender"])
-#                     else:
-#                         gender.append("NO Info")
-#                     sp = Info.split("-")
-#                     d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                     date.append(d)
-#                     key.append(Info)
-#                     count.append(i)
-#                     i += 1
-#         susname = set_susname(susname)
-#         # return str(name)
-#         return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, gender = gender, show="ข้อมูลของคดี")
-
-#     #except:
-#         #return render_template('no_data.html')
-
-
 @app.route("/InformationFromCase_API", methods=['GET'])
 def API_Showcase():
     # try:
@@ -467,119 +195,6 @@ def API_Showcase():
         resp.headers['Content-Type'] = 'application/json'
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
-    # except :
-    #     return render_template('no_data.html')
-   
-
-
-# @app.route("/InformationFromDate", methods=['POST'])
-# def Showdate():
-#     Date = request.form['Date']
-#     try:
-#         result = firebase.get('/users', None)
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         i = 0
-#         for Info in result:
-#             sp = Info.split("-")
-#             dsp = Date.split("-")
-#             if ((dsp[0] == sp[2]) and (dsp[1] == sp[1]) and (dsp[2] == sp[0])):
-#                 if (result[Info] != None):
-#                     if "Name" in result[Info]:
-#                         name.append(result[Info]["Name"])
-#                     else:
-#                         name.append("NO Info")
-#                     if "Case" in result[Info]:
-#                         case.append(result[Info]["Case"])
-#                     else:
-#                         case.append("NO Info")
-#                     if "Susname" in result[Info]:
-#                         susname.append(result[Info]["Susname"])
-#                     else:
-#                         susname.append("NO Info")
-#                     if "Sussocial" in result[Info]:
-#                         sussocial.append(result[Info]["Sussocial"])
-#                     else:
-#                         sussocial.append("NO Info")
-#                     if "Type" in result[Info]:
-#                         socialtype.append(result[Info]["Type"])
-#                     else:
-#                         socialtype.append("NO Info")
-#                     if "Gender" in result[Info]:
-#                         if(result[Info]["Gender"] == "M"):
-#                             gender.append("Male")
-#                         elif (result[Info]["Gender"] == "F"):
-#                             gender.append("Female")
-#                         else:
-#                             gender.append("Alternative")
-#                         # gender.append(result[Info]["Gender"])
-#                     else:
-#                         gender.append("NO Info")
-#                     d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                     date.append(d)
-#                     key.append(Info)
-#                     count.append(i)
-#                     i += 1
-#         susname = set_susname(susname)
-#         return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, gender=gender, show="ข้อมูลของวันที่แจ้งเหตุ")
-#     except:
-#         # flash("Don't Have any Day that you want")
-#         return render_template('no_data.html')
-
-    # try:
-    #     result = firebase.get('/users', None)
-    #     name = []
-    #     sussocial = []
-    #     case = []
-    #     susname = []
-    #     socialtype = []
-    #     count = []
-    #     date = []
-    #     key = []
-    #     i = 0
-    #     for Info in result:
-    #         sp = Info.split("-")
-    #         dsp = Date.split("-")
-    #         if ((dsp[0] == sp[2]) and (dsp[1] == sp[1]) and (dsp[2] == sp[0])):
-    #             if (result[Info] != None):
-    #                 if "Name" in result[Info]:
-    #                     name.append(result[Info]["Name"])
-    #                 else:
-    #                     name.append("NO Info")
-    #                 if "Case" in result[Info]:
-    #                     case.append(result[Info]["Case"])
-    #                 else:
-    #                     case.append("NO Info")
-    #                 if "Susname" in result[Info]:
-    #                     temp = result[Info]["Susname"].split('_')
-    #                     nt = temp[0]+" "+temp[1]
-    #                     susname.append(nt)
-    #                 else:
-    #                     susname.append("NO Info")
-    #                 if "Sussocial" in result[Info]:
-    #                     sussocial.append(result[Info]["Sussocial"])
-    #                 else:
-    #                     sussocial.append("NO Info")
-    #                 if "Type" in result[Info]:
-    #                     socialtype.append(result[Info]["Type"])
-    #                 else:
-    #                     socialtype.append("NO Info")
-    #                 d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-    #                 date.append(d)
-    #                 key.append(Info)
-    #                 count.append(i)
-    #                 i += 1
-    #                 return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, show="ข้อมูลของวันที่แจ้งเหตุ")
-
-    # except:
-    #     return render_template("no_data.html")
 
 
 @app.route("/InformationFromDate_API", methods=['GET'])
@@ -655,75 +270,6 @@ def API_Showdate():
     except:
         # flash("Don't Have any Day that you want")
         return render_template('no_data.html')
-
-
-# @app.route("/InformationFromType", methods=['POST'])
-# def Showtype():
-#     #try:
-#         result = firebase.get('/users', None)
-#         Type = request.form['Type']
-#         if (Type == "Facebook"):
-#             Sussocial = request.form['Susfacebook']
-#         elif (Type == "E-mail"):
-#             Sussocial = request.form['Susemail']
-#         elif (Type == "Website"):
-#             Sussocial = request.form['Susurl']
-#         else:
-#             Sussocial = request.form['Susline']
-#         name = []
-#         sussocial = []
-#         case = []
-#         susname = []
-#         socialtype = []
-#         count = []
-#         date = []
-#         key = []
-#         gender = []
-#         i = 0
-#         for Info in result:
-#             if (result[Info] != None):
-#                 if (result[Info]["Type"] == Type):
-#                     if (result[Info]["Sussocial"] == Sussocial):
-#                         if "Name" in result[Info]:
-#                             name.append(result[Info]["Name"])
-#                         else:
-#                             name.append("NO Info")
-#                         if "Case" in result[Info]:
-#                             case.append(result[Info]["Case"])
-#                         else:
-#                             case.append("NO Info")
-#                         if "Susname" in result[Info]:
-#                             susname.append(result[Info]["Susname"])
-#                         else:
-#                             susname.append("NO Info")
-#                         if "Sussocial" in result[Info]:
-#                             sussocial.append(result[Info]["Sussocial"])
-#                         else:
-#                             sussocial.append("NO Info")
-#                         if "Type" in result[Info]:
-#                             socialtype.append(result[Info]["Type"])
-#                         else:
-#                             socialtype.append("NO Info")
-#                         if "Gender" in result[Info]:
-#                             if(result[Info]["Gender"] == "M"):
-#                                 gender.append("Male")
-#                             elif (result[Info]["Gender"] == "F"):
-#                                 gender.append("Female")
-#                             else:
-#                                 gender.append("Alternative")
-#                             # gender.append(result[Info]["Gender"])
-#                         else:
-#                             gender.append("NO Info")
-#                         sp = Info.split("-")
-#                         d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-#                         date.append(d)
-#                         key.append(Info)
-#                         count.append(i)
-#                         i += 1
-#         susname = set_susname(susname)
-#         return render_template('showinformation.html', name=name, case=case, susname=susname, sussocial=sussocial, socialtype=socialtype, date=date, count=count, key=key, gender = gender, show="ข้อมูลของประเภท")
-#     # except:
-#     #     return render_template('no_data.html')
 
 
 @app.route("/InformationFromType_API", methods=['GET'])
@@ -1242,6 +788,46 @@ def API_check_phishing():
             # return redirect(url_for("urlcheck",status= "KfekaKL",link=check))
             return '"'+check+'" มีความน่าจะเป็นสูงที่จะเป็นฟิชชิ่ง'
 
+@app.route('/webhook', methods=['POST'])
+def webhook():
+
+    req = request.get_json(silent=True, force=True)
+    res = processRequest(req)
+    res = json.dumps(res, indent=4)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+def processRequest(req):
+    # Parsing the POST request body into a dictionary for easy access.
+    req_dict = json.loads(request.data)
+    print(req_dict)
+    # Accessing the fields on the POST request boduy of API.ai invocation of the webhook
+    intent = req_dict["queryResult"]["intent"]["displayName"]
+
+    if intent == 'domainchecker':
+
+        speech = "OK, go"
+
+    else:
+
+        speech = "I don't understand what you want"
+
+    res = makeWebhookResult(speech)
+
+    return res
+
+
+def makeWebhookResult(speech):
+
+    return {
+  "fulfillmentText": speech
+    }
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.getenv('PORT', 5000))
+
+    print("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0', threaded=True)
