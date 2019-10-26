@@ -38,3 +38,4 @@ uritemplate==3.0.0
 urllib3==1.25.3
 Werkzeug==0.15.5
 gunicorn==19.9.0
+json==2.0.9
