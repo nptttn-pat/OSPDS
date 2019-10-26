@@ -790,7 +790,7 @@ def API_check_phishing():
 
 @app.route('/webhook', methods=['POST','GET'])
 def webhook():
-    
+
     req = request.get_json(silent=True, force=True)
     res = processRequest(req)
     res = json.dumps(res, indent=4)
@@ -826,8 +826,10 @@ def makeWebhookResult(speech):
 
 
 if __name__ == "__main__":
-    port = int(os.getenv('PORT', 5000))
+    # port = int(os.getenv('PORT', 5000))
 
-    print("Starting app on port %d" % port)
+    # print("Starting app on port %d" % port)
 
-    app.run(debug=True, port=port, host='0.0.0.0', threaded=True)
+    # app.run(debug=True, port=port, host='0.0.0.0', threaded=True)
+
+    app.run(debug=True)
