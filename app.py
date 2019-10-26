@@ -788,7 +788,7 @@ def API_check_phishing():
             # return redirect(url_for("urlcheck",status= "KfekaKL",link=check))
             return '"'+check+'" มีความน่าจะเป็นสูงที่จะเป็นฟิชชิ่ง'
 
-@app.route('/webhook', methods=['POST','GET'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
 
     req = request.get_json(silent=True, force=True)
