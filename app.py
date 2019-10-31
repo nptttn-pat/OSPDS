@@ -135,7 +135,7 @@ def API_Showsusname():
 
 @app.route("/InformationFromCase_API", methods=['GET'])
 def API_Showcase():
-    # try:
+    try:
         casee = request.args.get('case')
         Case = casee.lower()
         result = firebase.get('/users', None)
@@ -201,6 +201,10 @@ def API_Showcase():
         resp.headers['Content-Type'] = 'application/json'
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
+
+    except:
+        # flash("Don't Have any Day that you want")
+        return render_template('no_data.html')
 
 
 @app.route("/InformationFromDate_API", methods=['GET'])
