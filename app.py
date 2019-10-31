@@ -9,6 +9,7 @@ from return_json import return_json,return_json_for_admin
 import os
 import sys
 import json
+import requests
 
 firebase = firebase.FirebaseApplication(
     'https://test-database-anres.firebaseio.com', None)
@@ -788,42 +789,6 @@ def API_check_phishing():
         else:
             # return redirect(url_for("urlcheck",status= "KfekaKL",link=check))
             return '"'+check+'" มีความน่าจะเป็นสูงที่จะเป็นฟิชชิ่ง'
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-
-    req = request.get_json(silent=True, force=True)
-    res = processRequest(req)
-    res = json.dumps(res, indent=4)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
-def processRequest(req):
-    # Parsing the POST request body into a dictionary for easy access.
-    req_dict = json.loads(request.data)
-    print(req_dict)
-    # Accessing the fields on the POST request boduy of API.ai invocation of the webhook
-    intent = req_dict["queryResult"]["intent"]["displayName"]
-
-    if intent == 'domainchecker':
-
-        speech = "OK, go"
-
-    else:
-
-        speech = "I don't understand what you want"
-
-    res = makeWebhookResult(speech)
-
-    return res
-
-
-def makeWebhookResult(speech):
-
-    return {
-  "fulfillmentText": speech
-    }
 
 
 if __name__ == "__main__":
