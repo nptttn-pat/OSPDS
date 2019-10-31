@@ -59,14 +59,16 @@ def Searchtype():
 
 @app.route("/InformationFromSuspect_API", methods=['GET'])
 def API_Showsusname():
-    try:
+    # try:
         fname = request.args.get('fname')
         sname = request.args.get('sname')
         susfname = fname
         suslname = sname
         Susname = susfname+' '+suslname
+        # print(Susname)
         Susname1 = susfname+'_'+suslname
         result = firebase.get('/users', None)
+        # print(result)
         # name = []
         sussocial = []
         case = []
@@ -80,54 +82,56 @@ def API_Showsusname():
         i = 0
         for Info in result:
             if (result[Info] != None):
-                if (result[Info]["Susname"].lower() == Susname.lower() or result[Info]["Susname"].lower() == Susname1.lower()):
-                    # if "Name" in result[Info]:
-                    #     name.append(result[Info]["Name"])
-                    # else:
-                    #     name.append("NO Info")
-                    if "Case" in result[Info]:
-                        case.append(result[Info]["Case"])
-                    else:
-                        case.append("NO Info")
-                    if "Susname" in result[Info]:
-                        susname.append(result[Info]["Susname"])
-                    else:
-                        susname.append("NO Info")
-                    if "Sussocial" in result[Info]:
-                        sussocial.append(result[Info]["Sussocial"])
-                    else:
-                        sussocial.append("NO Info")
-                    if "Type" in result[Info]:
-                        socialtype.append(result[Info]["Type"])
-                    else:
-                        socialtype.append("NO Info")
-                    if "Gender" in result[Info]:
-                        if(result[Info]["Gender"] == "M"):
-                            gender.append("Male")
-                        elif (result[Info]["Gender"] == "F"):
-                            gender.append("Female")
-                        else:
-                            gender.append("Alternative")
-                        # gender.append(result[Info]["Gender"])
-                    else:
-                        gender.append("NO Info")
-                    if "Age" in result[Info]:
-                        age.append(result[Info]["Age"])
-                    else:
-                        age.append("NO Info")
-                    sp = Info.split("-")
-                    d = sp[2]+'/'+sp[1]+'/20'+sp[0]
-                    date.append(d)
-                    key.append(Info)
-                    count.append(i)
-                    i += 1
+                for ii in result[Info]:
+                    if ii == "Susname":
+                        if (result[Info][ii].lower() == Susname.lower() or result[Info][ii].lower() == Susname1.lower()):
+                            # if "Name" in result[Info]:
+                            #     name.append(result[Info]["Name"])
+                            # else:
+                            #     name.append("NO Info")
+                            if "Case" in result[Info]:
+                                case.append(result[Info]["Case"])
+                            else:
+                                case.append("NO Info")
+                            if "Susname" in result[Info]:
+                                susname.append(result[Info]["Susname"])
+                            else:
+                                susname.append("NO Info")
+                            if "Sussocial" in result[Info]:
+                                sussocial.append(result[Info]["Sussocial"])
+                            else:
+                                sussocial.append("NO Info")
+                            if "Type" in result[Info]:
+                                socialtype.append(result[Info]["Type"])
+                            else:
+                                socialtype.append("NO Info")
+                            if "Gender" in result[Info]:
+                                if(result[Info]["Gender"] == "M"):
+                                    gender.append("Male")
+                                elif (result[Info]["Gender"] == "F"):
+                                    gender.append("Female")
+                                else:
+                                    gender.append("Alternative")
+                                # gender.append(result[Info]["Gender"])
+                            else:
+                                gender.append("NO Info")
+                            if "Age" in result[Info]:
+                                age.append(result[Info]["Age"])
+                            else:
+                                age.append("NO Info")
+                            sp = Info.split("-")
+                            d = sp[2]+'/'+sp[1]+'/20'+sp[0]
+                            date.append(d)
+                            key.append(Info)
+                            count.append(i)
+                            i += 1
         susname = set_susname(susname)
         resp = make_response(return_json(case, susname, sussocial, socialtype, gender,age))
         resp.headers['Content-Type'] = 'application/json'
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
-    except:
-        return render_template('no_data.html')
+    # except:
+    #     return render_template('no_data.html')
 
 @app.route("/InformationFromCase_API", methods=['GET'])
 def API_Showcase():
