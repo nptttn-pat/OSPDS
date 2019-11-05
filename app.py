@@ -793,14 +793,14 @@ def API_check_phishing():
             # print(ans,file=sys.stderr)
         if result is None:
             # return redirect(url_for("urlcheck",status= "eKfeoLK",link=check))
-            resp = make_response('"'+check+'" ไม่มีในฐานข้อมูล')
+            resp = make_response("0")
             resp.headers['Access-Control-Allow-Origin'] = '*'
             resp.headers["Access-Control-Allow-Methods"] = '*'
             resp.headers["Access-Control-Allow-Header"] = "*"
             return resp
         else:
             # return redirect(url_for("urlcheck",status= "KfekaKL",link=check))
-            resp = make_response('"'+check+'" มีความน่าจะเป็นสูงที่จะเป็นฟิชชิ่ง')
+            resp = make_response("1")
             resp.headers['Access-Control-Allow-Origin'] = '*'
             resp.headers["Access-Control-Allow-Methods"] = '*'
             resp.headers["Access-Control-Allow-Header"] = "*"
